@@ -1,8 +1,7 @@
-def search(l: list, v: int):
-    """
-    - invariant: v should be in [lo, hi) as long as len(range)>0
-    """
+import random
+import time
 
+def binarysearch(l: list, v: int):
     lo, hi = 0, len(l)
     
     while hi > lo:
@@ -15,10 +14,24 @@ def search(l: list, v: int):
         if l[mid] < v:
             lo = mid+1
     return None
-if __name__ == "__main__":
-    l = [-3, 4, 5, 6, 10]
+
+def iterative(l: list, v: int):
+    for idx, val in enumerate(l):
+        if val == v:
+            return idx
     
-    print(search(l, 4))
-    print(search(l, -3))
-    print(search(l, 10))
-    print(search(l, -1))
+    return None
+
+if __name__ == "__main__":
+    for size in (10, 100, 1000, 100_000, 1_000_000):
+        l = [random.randint(1, 100) for _ in range(size)]
+        idx = random.randint(0, size)
+
+        s = time.monotonic()
+        _ = iterative(l, 1235)
+        print(f"took {time.monotonic() - s} for linear search")
+
+        l = sorted(l)
+        s = time.monotonic()
+        _ = binarysearch(l, 1235)
+        print(f"took {time.monotonic() - s} for binary search")
