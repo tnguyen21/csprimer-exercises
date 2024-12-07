@@ -1,3 +1,5 @@
+import socket, struct
+
 sender = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 rcver = socket.socket(socket.AF_INET, socket.SOCK_RAW, socket.IPPROTO_ICMP) 
 rcver.settimeout(1)
