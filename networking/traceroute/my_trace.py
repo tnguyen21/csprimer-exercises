@@ -34,7 +34,7 @@ for ttl in range(1, max_hop):
     emb_udp_header = emb_ip_header + ((data[emb_ip_header] & 0x0f) << 2) + 2
     dst_port = struct.unpack("!H", data[emb_udp_header:emb_udp_header + 2])[0]
 
-    if dst_port == target_port: continue
+    if dst_port != target_port: continue
 
     print(f'{ttl=}, {res_ip=}')
     break
