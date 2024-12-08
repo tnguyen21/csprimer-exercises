@@ -1,12 +1,3 @@
-"""
-
-Plan:
-
-    - Try to trigger an ICMP TTL exceeded response (ie send UDP probe with low TTL)
-    - Parse ICMP response, and associate it with the probe
-    - In a loop, send out one probe per TTL from 1 to 64 or until we receive "port unreachable"
-"""
-
 import socket
 import struct
 
@@ -30,9 +21,8 @@ sorted_asdb = sorted(asdb, key = lambda x: x[0])
 def find_asn(ip):
     ip_int = struct.unpack("!I", socket.inet_aton(ip))[0]
     for start, end, asn_no, desc in sorted_asdb:
-        if ip_int >= start and ip_int <= end:
-            return desc if desc is not "None" else asn_no
-
+        if start <= ip_int <= end:
+            return f"{asn_no} {desc}"
 
 for ttl in range(1, 65):
     sender.setsockopt(socket.SOL_IP, socket.IP_TTL, ttl)
