@@ -20,6 +20,12 @@ def verify(card_no: str):
     # calculate (10 - (sum % 10)) % 10
     return (10 - (sum % 10)) % 10 == check_no
 
+def oz_verify(card_no):
+    total = 0
+    for i, d in enumerate(reversed(card_no)):
+        x = int(d) * (1 + i % 2)
+        total += x // 10 + x
+    return total % 10 == 0
 
 if __name__ == "__main__":
     assert verify("17893729974") == True
@@ -29,4 +35,12 @@ if __name__ == "__main__":
     assert verify("17493729974") == False 
     assert verify("3048088033") == False
     assert verify("6041055343") == False 
+
+    assert oz_verify("17893729974") == True
+    assert oz_verify("3018088033") == True
+    assert oz_verify("6031055343") == True
+
+    assert oz_verify("17493729974") == False 
+    assert oz_verify("3048088033") == False
+    assert oz_verify("6041055343") == False 
 
