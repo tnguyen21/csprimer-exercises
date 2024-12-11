@@ -2,7 +2,8 @@ from pprint import pprint
 x = [
     1, 2, 3,
     [1, 2, 3],
-    ['a', 'b', 'c', [1, 2, 3]]
+    ['a', 'b', 'c', [1, 2, 3]],
+    1, 2, 3,
 ]
 
 def my_pprint(xs, indent=0):
