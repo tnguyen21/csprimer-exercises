@@ -5,6 +5,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include <sys/resource.h>
+#include <cpuid.h>
 
 #define SLEEP_SEC 3
 #define NUM_MULS 100000000
@@ -13,6 +14,13 @@
 
 #define TOTAL_USEC(tv) (tv).tv_sec * 1000000 + (tv).tv_usec
 #define TOTAL_NSEC(tv) (tv).tv_sec * 1000000000 + (tv).tv_nsec
+
+unsigned getcpu() {
+  unsigned reg[4];
+  __cpuid_count(1, 0, reg[0], reg[1], reg[2], reg[3]);
+
+  return reg[1] >> 24;
+}
 
 struct profile_times {
   uint64_t real_ns;
@@ -33,7 +41,6 @@ void profile_start(struct profile_times *t) {
   t->sys_ms = TOTAL_USEC(usage.ru_stime);
 }
 
-// TODO given starting information, compute and log differences to now
 void profile_log(struct profile_times *t) {
   struct timespec ts;
   struct rusage usage;
@@ -45,7 +52,7 @@ void profile_log(struct profile_times *t) {
   uint64_t diff_user = TOTAL_USEC(usage.ru_utime) - t->user_ms;
   uint64_t diff_sys = TOTAL_USEC(usage.ru_stime) - t->sys_ms;
 
-  printf("[pid %d]\n", getpid());
+  printf("[pid %d cpu %d]\n", getpid(), getcpu());
   printf("real: %0.03f user: %0.03f sys %0.03f\n",
     diff_real / 1000000000.0,
     diff_user / 1000000.0,
