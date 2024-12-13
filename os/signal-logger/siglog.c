@@ -10,6 +10,10 @@ void handle(int sig) {
   handled |= (1 << sig);
   printf("Caught %d: %s (%d total)\n", sig, sys_siglist[sig],
          __builtin_popcount(handled));
+  
+  if (sig == SIGINT || sig == SIGTERM || sig == SIGQUIT)
+    exit(0);
+
 }
 
 int main(int argc, char* argv[]) {
@@ -17,6 +21,10 @@ int main(int argc, char* argv[]) {
     for (int i = 0; i < NSIG; i++) {
         signal(i, handle);
     }
+
+    // sigfpe?
+    volatile int zero = 0;
+    printf("%d", 1 / zero);
 
     // spin
     for (;;)
