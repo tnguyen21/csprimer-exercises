@@ -11,4 +11,6 @@ int main(int argc, char *argv[]) {
 
   while((dent = readdir(dirp)) != NULL)
     printf("%24lu %24hu %24s\n", dent->d_ino, dent->d_reclen, dent->d_name);
+
+  closedir(dirp);
 }
