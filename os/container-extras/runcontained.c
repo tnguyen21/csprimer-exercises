@@ -1,6 +1,6 @@
 #define _GNU_SOURCE
 #include <sched.h>
-#include <sys/capabilities.h>
+#include <sys/capability.h>
 #include <sys/stat.h>
 #include <sys/wait.h>
 #include <sys/syscall.h>
