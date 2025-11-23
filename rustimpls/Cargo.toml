@@ -1,0 +1,14 @@
+[workspace]
+members = [
+    "dbs",
+    "dist-systems",
+    "dsa",
+    "networking",
+    "programming",
+    "systems",
+]
+resolver = "2"
+
+[workspace.package]
+edition = "2024"
+version = "0.1.0"
