@@ -1,7 +1,7 @@
+use regex::{Captures, Regex};
 use std::env;
 use std::fs;
 use std::sync::OnceLock;
-use regex::{Captures, Regex};
 
 fn main() {
     let path = env::args().nth(1).expect("Please provide a file path");
@@ -20,7 +20,8 @@ fn convert_hex_colors(input: &str) -> String {
 
     re.replace_all(input, |caps: &Captures| {
         convert_hex_to_rgb(&caps[1]).unwrap_or_else(|| caps[0].to_string())
-    }).to_string()
+    })
+    .to_string()
 }
 
 fn convert_hex_to_rgb(hex: &str) -> Option<String> {
@@ -29,7 +30,8 @@ fn convert_hex_to_rgb(hex: &str) -> Option<String> {
 
     // A fast helper to convert a hex byte (e.g., b'a') to decimal (10)
     let to_dec = |b: u8| -> u8 {
-        HEX_DIGITS.iter()
+        HEX_DIGITS
+            .iter()
             .position(|&d| d == b.to_ascii_lowercase())
             .unwrap_or(0) as u8
     };
@@ -50,7 +52,7 @@ fn convert_hex_to_rgb(hex: &str) -> Option<String> {
             .map(|chunk| {
                 let v1 = to_dec(chunk[0]);
                 // chunk[1] is guaranteed by Regex, but safe indexing is good practice
-                let v2 = to_dec(*chunk.get(1).unwrap_or(&b'0')); 
+                let v2 = to_dec(*chunk.get(1).unwrap_or(&b'0'));
                 (v1 << 4) | v2
             })
             .collect()
