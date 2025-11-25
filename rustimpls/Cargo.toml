@@ -2,7 +2,6 @@
 members = [
     "dbs",
     "dist-systems",
-    "dsa",
     "networking",
     "programming",
     "systems",
