@@ -23,7 +23,6 @@ fn main() -> io::Result<()> {
             for _ in 0..beeps {
                 stdout.write_all(&[0x07])?;
                 stdout.flush()?;
-                std::thread::sleep(std::time::Duration::from_secs(1));
             }
         }
     }
