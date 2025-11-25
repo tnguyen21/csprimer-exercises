@@ -1,4 +1,4 @@
-fn encode(mut i: i32) -> Vec<u8> {
+fn encode(mut i: u64) -> Vec<u8> {
     let mut payload = Vec::new();
 
     while i >= 128 {
@@ -10,19 +10,19 @@ fn encode(mut i: i32) -> Vec<u8> {
     payload
 }
 
-fn decode(bs: Vec<u8>) -> i32 {
+fn decode(bs: Vec<u8>) -> u64 {
     let mut n = 0;
 
     for b in bs.into_iter().rev() {
         n <<= 7;
-        n += (b & 0x7f) as i32;
+        n += (b & 0x7f) as u64;
     }
 
     n
 }
 
 fn main() {
-    for i in 0..1_000_000 {
+    for i in 0..1 >> 63 {
         assert_eq!(decode(encode(i)), i);
     }
 }
