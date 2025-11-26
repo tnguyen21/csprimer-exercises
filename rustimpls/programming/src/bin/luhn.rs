@@ -1,3 +1,4 @@
+#[allow(dead_code)]
 fn verify(card_no: &str) -> bool {
     let mut total = 0;
 
