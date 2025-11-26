@@ -22,7 +22,7 @@ fn decode(bs: Vec<u8>) -> u64 {
 }
 
 fn main() {
-    for i in 0..1 >> 63 {
+    for i in 0..1_000_000 {
         assert_eq!(decode(encode(i)), i);
     }
 }
