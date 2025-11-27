@@ -21,13 +21,13 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     let _ = file.read_exact(&mut src);
 
     let mut rotated = Vec::<u8>::new();
-    
+
     for ty in 0..width {
         for tx in 0..width {
             let sy = tx;
             let sx = width - ty - 1;
             let n = 3 * (sy * width + sx) as usize;
-            rotated.extend_from_slice(&src[n..n+3]);
+            rotated.extend_from_slice(&src[n..n + 3]);
         }
     }
 
