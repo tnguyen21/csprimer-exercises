@@ -6,7 +6,7 @@ fn conceal(s: String) -> f64 {
 
     let len = s_bytes.len().min(6);
     out[2..2 + len].copy_from_slice(&s_bytes[..len]);
-    
+
     f64::from_le_bytes(out)
 }
 
@@ -19,12 +19,12 @@ fn extract(f: f64) -> String {
 
 fn main() {
     let msg = "hotdog".to_string();
-    assert_eq!(msg, extract(conceal(msg.clone())));    
-    
+    assert_eq!(msg, extract(conceal(msg.clone())));
+
     let msg = "hi".to_string();
-    assert_eq!(msg, extract(conceal(msg.clone())));    
-    
+    assert_eq!(msg, extract(conceal(msg.clone())));
+
     // should truncate long messages
     let msg = "hello!!!".to_string();
-    assert_eq!("hello!".to_string(), extract(conceal(msg.clone())));    
+    assert_eq!("hello!".to_string(), extract(conceal(msg.clone())));
 }
