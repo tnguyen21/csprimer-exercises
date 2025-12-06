@@ -1,13 +1,34 @@
 #[allow(dead_code)]
 fn verify(card_no: &str) -> bool {
-    let mut total = 0;
+    let cleaned: String = card_no.chars().filter(|c| !c.is_whitespace()).collect();
 
-    for (i, d) in card_no.chars().rev().enumerate() {
-        let x = d.to_digit(10).unwrap() * (1 + (i as u32 % 2));
-        total += x / 10 + x;
+    if cleaned.len() <= 1 {
+        return false;
     }
 
-    total % 10 == 0
+    if !cleaned.chars().all(|c| c.is_ascii_digit()) {
+        return false;
+    }
+
+    let sum: u32 = cleaned
+        .chars()
+        .rev()
+        .enumerate()
+        .map(|(i, c)| {
+            let mut d = c.to_digit(10).unwrap();
+
+            if i % 2 == 1 {
+                d *= 2;
+                if d > 9 {
+                    d -= 9;
+                }
+            }
+
+            d
+        })
+        .sum();
+
+    sum % 10 == 0
 }
 
 fn main() {}
